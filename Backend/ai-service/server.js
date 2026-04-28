@@ -7,13 +7,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/**
- * Safe JSON parser
- */
 const safeParse = (text) => {
   try {
     return JSON.parse(text);
-  } catch {
+  } catch (e) {
     return null;
   }
 };
@@ -21,6 +18,10 @@ const safeParse = (text) => {
 app.post("/query", async (req, res) => {
   try {
     const { message } = req.body;
+
+    if (!message) {
+      return res.status(400).json({ error: "Message is required" });
+    }
 
     const response = await axios.post(
       "https://api.groq.com/openai/v1/chat/completions",
@@ -34,11 +35,7 @@ Extract:
 - ocean (atlantic, pacific, indian, arctic, southern)
 - chartType (line or bar)
 
-Rules:
-- Default chartType = line
-- If user mentions "bar" → bar
-- Return ONLY JSON
-
+Return ONLY JSON:
 {
   "ocean": "",
   "chartType": ""
@@ -54,7 +51,7 @@ Rules:
       },
       {
         headers: {
-          Authorization: \Bearer \${process.env.GROQ_API_KEY}\,
+          Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
           "Content-Type": "application/json"
         }
       }
@@ -67,14 +64,15 @@ Rules:
     if (!parsed) {
       return res.status(400).json({
         error: "Invalid AI response",
-        raw
+        raw: raw
       });
     }
 
-    res.json(parsed);
+    return res.json(parsed);
 
   } catch (err) {
-    res.status(500).json({
+    console.error(err);
+    return res.status(500).json({
       error: err.message
     });
   }

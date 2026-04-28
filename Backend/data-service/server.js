@@ -41,7 +41,7 @@ end_date:"20240102"
 }
 }
 
-);
+); 
 const rawData = response.data.data.slice(0,50);
 const chartData = formatChartData(rawData);
 res.json({
@@ -58,3 +58,4 @@ error:err.message
 app.listen(5001,()=>{
 console.log("Server running");
 })
+// Data services
