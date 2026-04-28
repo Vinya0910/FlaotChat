@@ -1,5 +1,5 @@
 const express = require("express"); // Required libraries
-const cors = require("cors");// allow frontend request
+const cors = require("cors");
 const axios = require("axios");
 require("dotenv").config();
 
