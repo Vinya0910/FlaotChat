@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express"); // Required libraries
 const cors = require("cors");
 const axios = require("axios");
 require("dotenv").config();
@@ -81,3 +81,4 @@ Return ONLY JSON:
 app.listen(5002, () => {
   console.log("AI Service running on port 5002");
 });
+// 
