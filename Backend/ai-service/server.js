@@ -1,6 +1,6 @@
 const express = require("express"); // import libraries
 const cors = require("cors");
-const axios = require("axios"); // to call external api
+const axios = require("axios"); 
 require("dotenv").config();
 
 const app = express();
